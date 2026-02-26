@@ -253,7 +253,7 @@ function render(){
       <td>${fmtDate(r.payDate)}</td>
       <td>${freqLabel(r.distributionFrequency)}</td>
       <td>${chips(r)}</td>
-      <td class="small">${escapeHtml(r.note||'')}</td>
+      <td class="small note" title="${escapeHtml(r.note||'')}">${escapeHtml(r.note||'')}</td>
     `;
     tbody.appendChild(tr);
   }

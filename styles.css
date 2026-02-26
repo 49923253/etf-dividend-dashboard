@@ -132,10 +132,15 @@ th,td{
   padding:10px 10px;
   border-bottom:1px solid rgba(28,42,64,.7);
   font-size:13px;
-  /* allow wrapping so more columns can fit at 100% zoom */
-  white-space:normal;
+  /* Default: keep rows compact */
+  white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+}
+
+/* Allow wrapping only where it helps */
+#t td:nth-child(2){ /* 名稱 */
+  white-space:normal;
 }
 
 th{
@@ -230,6 +235,11 @@ tr:hover td:nth-child(2){
 
 .badge{font-size:11px; padding:3px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted)}
 .badge.warn{color:var(--warn); border-color: rgba(251,191,36,.35)}
+
+/* Notes: keep single-line with ellipsis to avoid huge row heights across browsers */
+#t td.note{
+  max-width: 320px;
+}
 
 .footer{padding:12px 20px 26px; max-width:1200px;margin:0 auto;color:var(--muted);font-size:12px}
 a{color:inherit}
