@@ -1,1 +1,2 @@
-data.json
+# Keep generated data.json tracked so Netlify can serve it
+# (If you later want private data, we can switch to server-side fetch.)
