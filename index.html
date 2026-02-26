@@ -80,17 +80,18 @@
       <section class="card">
         <div class="card-h">
           <h2>說明</h2>
-          <span class="badge">MVP</span>
+          <span class="badge">每日更新</span>
         </div>
         <div class="card-b">
           <p class="small" style="margin-top:0">
-            這頁目前用的是 <code>data.sample.json</code>（假資料）來把介面、排序、篩選、標註先做起來。
-            你指定資料來源後，我再補「自動更新 data.json」的抓取腳本與排程。
+            這頁整理台股 ETF 的「除息時程＋配息資訊」，讓你一眼掌握接下來的配息重點。
           </p>
           <ul class="small" style="line-height:1.6">
-            <li>點表格欄位標題可排序（預設依「除息日」由近到遠）</li>
-            <li>「季配」「科技股」會用 chip 標註，且可篩選</li>
-            <li>日期未知會顯示「—」，排序時會排到最後</li>
+            <li><strong>除息日</strong>：只顯示「未來」除息；未公告會顯示「尚未公告（預估公告日／預估除息日）」；不配息則顯示「無配息」</li>
+            <li><strong>距離</strong>：以台灣時間計算（今天／即將除息／X 天後）</li>
+            <li><strong>配息頻率</strong>：依近一年配息紀錄推估（月配／季配／半年配／年配）；無配息會標示「不配息」</li>
+            <li><strong>名稱</strong>：顯示精簡名稱（以發行人/交易所常用名稱為主），滑鼠移上去可看完整全名</li>
+            <li><strong>資料來源</strong>：TWSE（除息/配息）、TWSE（收盤價）；每日自動更新</li>
           </ul>
         </div>
       </section>
