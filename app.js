@@ -88,7 +88,12 @@ function fmtDate(s){
 function fmtExDiv(r){
   if(r?.dividendPolicy === 'no_dividend') return '無配息';
   if(r?.exDividendDate) return r.exDividendDate;
-  if(r?.estimatedAnnounceDate) return `尚未公告（預估 ${r.estimatedAnnounceDate} 公告）`;
+  if(r?.estimatedAnnounceDate && r?.estimatedExDividendDate){
+    return `尚未公告（預估 ${r.estimatedAnnounceDate} 公告；預估 ${r.estimatedExDividendDate} 除息）`;
+  }
+  if(r?.estimatedAnnounceDate){
+    return `尚未公告（預估 ${r.estimatedAnnounceDate} 公告）`;
+  }
   return '尚未公告';
 }
 function daysUntil(dateStr){
@@ -113,6 +118,7 @@ function badgeForRow(r){
   if(r?.dividendPolicy === 'no_dividend') return {cls:'badge', text:'無配息'};
   const du = daysUntil(r?.exDividendDate);
   if(du === null) return {cls:'badge', text:'尚未公告'};
+  if(du < 0) return {cls:'badge', text:'已除息'};
   if(du === 0) return {cls:'badge warn', text:'今天除息'};
   if(du <= 7) return {cls:'badge warn', text:'即將除息'};
   return {cls:'badge', text:`${du} 天後`};
@@ -139,13 +145,20 @@ async function load(){
   state.rows = (Array.isArray(data) ? data : []).map(x => {
     const fullName = cleanText(x.name);
     const displayName = cleanText(x.shortName) || shortFundName(fullName);
+
+    // Hide past ex-dividend dates (user only cares about future).
+    const ex = cleanText(x.exDividendDate);
+    const du = daysUntil(ex);
+    const ex2 = (du != null && du < 0) ? null : (ex || null);
+
     return {
       ...x,
       ticker: cleanText(x.ticker),
       name: fullName,
       displayName,
       note: cleanText(x.note),
-      _ex: parseDate(x.exDividendDate),
+      exDividendDate: ex2,
+      _ex: parseDate(ex2),
       _rec: parseDate(x.recordDate),
       _pay: parseDate(x.payDate),
     };
