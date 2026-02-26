@@ -1,0 +1,38 @@
+[
+  {
+    "ticker": "00929",
+    "name": "示例：台股科技高息ETF",
+    "price": 18.52,
+    "currency": "TWD",
+    "exDividendDate": "2026-03-06",
+    "recordDate": "2026-03-07",
+    "payDate": "2026-03-28",
+    "distributionFrequency": "quarterly",
+    "isTech": true,
+    "note": "示例資料：之後請換成真實來源"
+  },
+  {
+    "ticker": "00878",
+    "name": "示例：國民ETF",
+    "price": 22.31,
+    "currency": "TWD",
+    "exDividendDate": "2026-03-18",
+    "recordDate": "2026-03-19",
+    "payDate": "2026-04-15",
+    "distributionFrequency": "quarterly",
+    "isTech": false,
+    "note": "示例資料"
+  },
+  {
+    "ticker": "0050",
+    "name": "示例：台灣50",
+    "price": 156.8,
+    "currency": "TWD",
+    "exDividendDate": null,
+    "recordDate": null,
+    "payDate": null,
+    "distributionFrequency": "unknown",
+    "isTech": false,
+    "note": "示例：日期未知時允許為 null"
+  }
+]

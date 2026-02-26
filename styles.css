@@ -1,0 +1,245 @@
+:root{
+  --bg:#0b0f14;
+  --panel:#101826;
+  --panel2:#0f1520;
+  --text:#e8eef7;
+  --muted:#a7b3c6;
+  --line:#1c2a40;
+  --accent:#ff4d6d;
+  --accent2:#4dd2ff;
+  --good:#2dd4bf;
+  --warn:#fbbf24;
+  --bad:#fb7185;
+  --chip:#18243a;
+  --shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans TC", Arial, sans-serif;
+  background: radial-gradient(1200px 700px at 20% 10%, rgba(77,210,255,.18), transparent 55%),
+              radial-gradient(1100px 650px at 90% 0%, rgba(255,77,109,.16), transparent 52%),
+              var(--bg);
+  color:var(--text);
+}
+header{
+  padding:28px 20px 18px;
+  max-width:1200px;
+  margin:0 auto;
+}
+.brand{
+  display:flex; align-items:center; gap:12px;
+}
+.logo{
+  width:40px;height:40px;border-radius:12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: var(--shadow);
+}
+.title h1{margin:0;font-size:20px;letter-spacing:.5px}
+.title p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+main{max-width:1200px;margin:0 auto;padding:0 20px 28px}
+.grid{
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap:16px;
+}
+@media (max-width: 980px){
+  .grid{grid-template-columns: 1fr}
+}
+.card{
+  background: linear-gradient(180deg, rgba(16,24,38,.92), rgba(16,24,38,.78));
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow: var(--shadow);
+}
+.card .card-h{
+  padding:14px 14px 10px;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card .card-h h2{margin:0;font-size:14px;color:var(--text)}
+.card .card-b{padding:14px}
+
+/* Responsive helpers */
+.mobile-only{display:none}
+.desktop-only{display:block}
+/* Only use cards on phone widths. Desktop/tablet stays table to avoid super long pages. */
+@media (max-width: 640px){
+  .mobile-only{display:block}
+  .desktop-only{display:none}
+}
+
+.controls{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+.controls .row{display:flex; flex-direction:column; gap:6px}
+label{font-size:12px;color:var(--muted)}
+input[type="text"], input[type="number"], select{
+  background: rgba(15,21,32,.85);
+  border:1px solid var(--line);
+  color:var(--text);
+  border-radius:12px;
+  padding:10px 10px;
+  outline:none;
+}
+input[type="checkbox"]{transform: translateY(1px)}
+.small{font-size:12px;color:var(--muted)}
+
+.kpis{display:grid; grid-template-columns: repeat(3, 1fr); gap:10px}
+.kpi{background: rgba(15,21,32,.72); border:1px solid var(--line); border-radius:14px; padding:12px}
+.kpi .k{font-size:11px;color:var(--muted)}
+.kpi .v{margin-top:6px;font-size:18px;font-weight:700}
+
+.table-hint{margin:0 0 10px; color:var(--muted)}
+
+.table-wrap{
+  position:relative;
+  overflow-x:auto;
+  overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius:14px;
+  border:1px solid var(--line);
+}
+
+/* Make horizontal scroll more discoverable (subtle edge fade) */
+.table-wrap::after{
+  content:"";
+  pointer-events:none;
+  position:sticky;
+  right:0;
+  top:0;
+  float:right;
+  width:28px;
+  height:100%;
+  background: linear-gradient(to left, rgba(11,15,20,.95), rgba(11,15,20,0));
+}
+
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  /* Try to fit all key columns at 100% zoom without forcing horizontal scroll */
+  min-width: 0;
+  table-layout: fixed;
+  background: rgba(15,21,32,.55)
+}
+
+th,td{
+  padding:10px 10px;
+  border-bottom:1px solid rgba(28,42,64,.7);
+  font-size:13px;
+  /* allow wrapping so more columns can fit at 100% zoom */
+  white-space:normal;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+th{
+  position:sticky;
+  top:0;
+  background: rgba(16,24,38,.96);
+  text-align:left;
+  font-size:12px;
+  color:var(--muted);
+  cursor:pointer;
+  z-index: 3;
+}
+
+/* Row hover (avoid overriding sticky first columns to prevent text bleed-through) */
+tr:hover td{background: rgba(255,255,255,.03)}
+tr:hover td:nth-child(1),
+tr:hover td:nth-child(2){
+  background: rgba(16,24,38,.98);
+}
+
+/* Sticky first two columns so you don't lose context while horizontal scrolling */
+#t th:nth-child(1),
+#t td:nth-child(1){
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background: rgba(16,24,38,.98);
+  width: 84px;
+}
+#t th:nth-child(2),
+#t td:nth-child(2){
+  position: sticky;
+  left: 84px; /* width of ticker column */
+  z-index: 4;
+  background: rgba(16,24,38,.98);
+  width: 280px;
+}
+
+/* Add a divider shadow after sticky columns */
+#t th:nth-child(2),
+#t td:nth-child(2){
+  box-shadow: 12px 0 18px rgba(0,0,0,.25);
+}
+
+/* Compact layout on common laptop widths: hide less critical columns to avoid empty right-side area */
+@media (max-width: 1366px){
+  /* hide: 評價日(6), 發放日(7), 備註(10) */
+  #t th:nth-child(6), #t td:nth-child(6),
+  #t th:nth-child(7), #t td:nth-child(7),
+  #t th:nth-child(10), #t td:nth-child(10){
+    display:none;
+  }
+  th,td{ padding: 9px 8px; font-size: 12.5px; }
+  #t th:nth-child(2), #t td:nth-child(2){ width: 240px; }
+}
+
+/* Phone widths: cards view already takes over */
+@media (max-width: 640px){
+  #t td:nth-child(2){
+    white-space: normal;
+  }
+}
+
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{background: var(--chip); border:1px solid var(--line); color:var(--text); padding:2px 8px; border-radius:999px; font-size:11px}
+.chip.tech{border-color: rgba(77,210,255,.45)}
+.chip.q{border-color: rgba(255,77,109,.45)}
+
+/* Mobile card list */
+.cards{display:flex; flex-direction:column; gap:10px}
+.card-row{background: rgba(15,21,32,.72); border:1px solid var(--line); border-radius:14px; padding:12px}
+.card-top{display:flex; gap:10px; align-items:baseline; justify-content:space-between}
+.card-top .left{display:flex; gap:10px; align-items:baseline; min-width:0}
+.card-ticker{font-weight:800; letter-spacing:.3px}
+.card-name{color:var(--text); font-weight:650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 100%}
+.card-meta{margin-top:8px; display:grid; grid-template-columns: 1fr 1fr; gap:8px}
+.card-meta .item{background: rgba(16,24,38,.55); border:1px solid rgba(28,42,64,.7); border-radius:12px; padding:8px}
+.card-meta .k{font-size:11px; color:var(--muted)}
+.card-meta .v{margin-top:4px; font-size:13px; color:var(--text)}
+
+/* Compact card layout (reduce page length) */
+.card-row.compact{padding:10px}
+.card-meta.compact{grid-template-columns: repeat(3, 1fr); gap:6px; margin-top:6px}
+.card-meta.compact .item{padding:6px; border-radius:10px}
+.card-meta.compact .k{font-size:10px}
+.card-meta.compact .v{margin-top:2px; font-size:12px}
+.card-tags{margin-top:8px}
+
+@media (max-width: 520px){
+  .card-meta.compact{grid-template-columns: 1fr 1fr}
+}
+
+.badge{font-size:11px; padding:3px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted)}
+.badge.warn{color:var(--warn); border-color: rgba(251,191,36,.35)}
+
+.footer{padding:12px 20px 26px; max-width:1200px;margin:0 auto;color:var(--muted);font-size:12px}
+a{color:inherit}
+.btns{display:flex; gap:8px; flex-wrap:wrap}
+button{
+  background: linear-gradient(135deg, rgba(255,77,109,.18), rgba(77,210,255,.14));
+  color: var(--text);
+  border: 1px solid rgba(92,124,176,.35);
+  padding: 9px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+button:hover{border-color: rgba(92,124,176,.65)}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>台股 ETF 配息儀表板（MVP）</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>台股 ETF 配息儀表板</h1>
+        <p>列出 ETF 股價與即將除息／評價／發放日，並標註「季配息」與「科技股」主題（MVP：示例資料格式）</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+
+      <section class="card">
+        <div class="card-h">
+          <h2>篩選與排序</h2>
+          <div class="btns">
+            <button id="reload" type="button">重新載入資料</button>
+            <button id="apply" type="button">套用篩選</button>
+          </div>
+        </div>
+        <div class="card-b">
+          <div class="controls">
+            <div class="row">
+              <label for="q">搜尋（代號/名稱）</label>
+              <input id="q" type="text" placeholder="例如：00929 / 國民 / 科技" />
+              <div class="small" id="sortHint"></div>
+            </div>
+
+            <div class="row">
+              <label for="dataSource">資料來源</label>
+              <select id="dataSource">
+                <option value="data.json" selected>data.json（真實資料輸出）</option>
+                <option value="data.sample.json">data.sample.json（示例）</option>
+              </select>
+              <div class="small" id="hint">—</div>
+            </div>
+
+            <div class="row">
+              <label><input id="onlyUpcoming" type="checkbox" /> 只看即將除息</label>
+              <div class="small">只顯示除息日為今天之後的 ETF</div>
+            </div>
+
+            <div class="row">
+              <label for="withinDays">即將除息：N 天內</label>
+              <input id="withinDays" type="number" min="1" max="365" value="30" />
+              <div class="small">搭配「只看即將除息」使用</div>
+            </div>
+
+            <div class="row">
+              <label><input id="onlyQuarterly" type="checkbox" /> 只看季配息</label>
+              <div class="small">特別針對季配 ETF</div>
+            </div>
+
+            <div class="row">
+              <label><input id="onlyTech" type="checkbox" /> 只看科技股 ETF</label>
+              <div class="small">科技主題會特別標註</div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="kpis">
+            <div class="kpi"><div class="k">ETF 總數</div><div class="v" id="kTotal">—</div></div>
+            <div class="kpi"><div class="k">目前顯示</div><div class="v" id="kShown">—</div></div>
+            <div class="kpi"><div class="k">7 天內除息</div><div class="v" id="kSoon">—</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-h">
+          <h2>說明</h2>
+          <span class="badge">MVP</span>
+        </div>
+        <div class="card-b">
+          <p class="small" style="margin-top:0">
+            這頁目前用的是 <code>data.sample.json</code>（假資料）來把介面、排序、篩選、標註先做起來。
+            你指定資料來源後，我再補「自動更新 data.json」的抓取腳本與排程。
+          </p>
+          <ul class="small" style="line-height:1.6">
+            <li>點表格欄位標題可排序（預設依「除息日」由近到遠）</li>
+            <li>「季配」「科技股」會用 chip 標註，且可篩選</li>
+            <li>日期未知會顯示「—」，排序時會排到最後</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+
+    <div style="height:16px"></div>
+
+    <section class="card">
+      <div class="card-h">
+        <h2>ETF 清單</h2>
+        <span class="small" id="viewHint">預設：除息日（升冪）</span>
+      </div>
+      <div class="card-b">
+        <div class="small mobile-only" style="margin:0 0 10px">螢幕較窄時自動改用卡片列表（不需要左右捲動）。</div>
+
+        <div class="small table-hint desktop-only">寬螢幕使用表格（可點欄位排序）。</div>
+        <div class="table-wrap desktop-only" aria-label="ETF table">
+          <table id="t">
+            <thead>
+              <tr>
+                <th data-k="ticker">代號</th>
+                <th data-k="name">名稱</th>
+                <th data-k="price" style="text-align:right">股價</th>
+                <th>距離</th>
+                <th data-k="exDividendDate">除息日</th>
+                <th data-k="recordDate">評價日</th>
+                <th data-k="payDate">發放日</th>
+                <th data-k="distributionFrequency">配息頻率</th>
+                <th data-k="isTech">標籤</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+
+        <div id="cards" class="cards mobile-only" aria-label="ETF cards"></div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div class="footer">
+    檔案位置：<code>etf-dividend-dashboard/</code> · 下一步：你指定資料來源/你提供一份 ETF 清單或公告表，我就能串真實資料。
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
